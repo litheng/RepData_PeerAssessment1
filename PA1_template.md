@@ -24,7 +24,7 @@ The data is first downloaded from the course website and stored as stepsdata.
 
 
 2. Plot histogram for total number of steps taken per day
-![plot of chunk PlotHistogram](figure/PlotHistogram-1.png) 
+![plot of chunk PlotHistogram](figure/PlotHistogram-1.png?raw=true ) 
 
 3a. Calculate mean of the total number of steps taken per day
 
