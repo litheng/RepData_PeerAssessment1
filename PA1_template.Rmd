@@ -1,25 +1,166 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
+output:
   html_document:
-    keep_md: true
+    fig_caption: yes
+    keep_md: yes
+    self_contained: no
 ---
+<h1>Reproducible Research: Peer Assessment 1</h1>
+<p>
+The data for this assignment comes from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
+</p>
+<p>
+<font size=+2><b>Loading and preprocessing the data</b></font>
 
+The data is first downloaded from the course website and stored as stepsdata.
 
-## Loading and preprocessing the data
+1. Load the full dataset into "stepsdata
+```{r LoadData, echo=FALSE}
 
+stepsdata <- read.csv("activity.csv", sep=",", na.strings="NA", stringsAsFactors=FALSE)
 
+```
+</p>
+<p>
+<font size=+2><b>What is the mean total number of steps taken per day?</b></font>
 
-## What is mean total number of steps taken per day?
+1. Summarise data for total number of steps taken per day
+```{r SummariseTotal, echo=FALSE}
 
+library(data.table)
+totaldf <- aggregate(as.numeric(stepsdata$steps), by=list(stepsdata$date), FUN=sum, na.rm=TRUE)
+names(totaldf) <- c("date","total")
 
+```
 
-## What is the average daily activity pattern?
+2. Plot histogram for total number of steps taken per day
+```{r PlotHistogram, echo=FALSE}
 
+hist(totaldf$total, col="plum3", xlab="Total Steps Per Day", ylab="Frequency of Days", main="Histogram")
 
+```
 
-## Imputing missing values
+3a. Calculate mean of the total number of steps taken per day
+```{r CalculateMean, echo=FALSE}
 
+mean(totaldf$total)
 
+```
 
-## Are there differences in activity patterns between weekdays and weekends?
+3b. Calculate median of the total number of steps taken per day
+```{r CalculateMedian, echo=FALSE}
+
+median(totaldf$total)
+
+```
+</p>
+<p>
+<font size=+2><b>What is the average daily activity pattern?</b></font>
+
+1a. Summarise data for average number of steps taken by interval
+```{r SummariseAveragePattern, echo=FALSE}
+
+dt <- data.table(stepsdata)
+averagedf = as.data.frame(dt[,list(average=mean(steps, na.rm=TRUE)), by=interval])
+
+```
+
+1b. Plot line chart for average daily activity pattern i.e. number of steps based on interval
+```{r PlotLine, echo=FALSE}
+
+library(ggplot2)
+ggplot(averagedf, aes(interval, average)) +
+        geom_line(color="darkslateblue", size=1) +
+        labs(x="5-Minute Interval", y="Average Number of Steps") +
+        labs(title="Average Number of Steps by Interval") +
+        theme(plot.title = element_text(vjust=2), axis.text.x  = element_text(vjust=0.5))
+
+```
+
+2. Calculate which 5-minute interval contains the maximum number of steps, on average across all the days in the dataset
+```{r CalculateAverage, echo=FALSE}
+
+averagedf$interval[which.max(averagedf$average)]
+
+```
+</p>
+<p>
+<font size=+2><b>Imputing missing values</b></font>
+
+1. Calculate the total number of missing values in the dataset (i.e. the total number of rows with NAs)
+```{r CalculateNAs, echo=FALSE}
+
+sum(is.na(stepsdata$steps))
+
+```
+
+3. Create a new dataset and impute rows that have missing step values with the average steps for that interval
+```{r ImputeValue, echo=FALSE}
+
+compstepsdata <- stepsdata
+
+for (i in seq(nrow(compstepsdata))) {
+   if (is.na(compstepsdata$steps[i])) {
+   compstepsdata$steps[i] <- averagedf$average[which(compstepsdata$interval[i] == averagedf$interval)]
+   }
+}
+
+comptotaldf <- aggregate(compstepsdata$steps, by=list(compstepsdata$date), FUN=sum, na.rm=TRUE)
+names(comptotaldf) <- c("date","total")
+
+```
+
+4a. Plot histogram for total number of steps taken per day after imputing
+```{r PlotImputedHistogram, echo=FALSE}
+
+hist(comptotaldf$total, col="rosybrown3", xlab="Total Steps Per Day", ylab="Frequency of Days", main="Histogram (After Imputation)")
+
+```
+
+4b. Calculate mean of the total number of steps taken per day (after imputation)
+```{r CalculateImputedMean, echo=FALSE}
+
+mean(comptotaldf$total)
+
+```
+
+4c. Calculate median of the total number of steps taken per day (after imputation)
+```{r CalculateImputedMedian, echo=FALSE}
+
+median(comptotaldf$total)
+
+```
+There are some differences in the mean and median after imputing values.  The mean and median were 9354.23 and 10395 previously but both of these are now 10766.19.
+</p>
+<p>
+<font size=+2><b>Are there differences in activity patterns between weekdays and weekends?</b></font>
+
+1. Derive if the date falls under weekday or weekend by creating a factor variable
+```{r WeekdayWeekend, echo=FALSE}
+
+day <- function(date) {
+        if (weekdays(as.Date(date)) %in% c("Saturday", "Sunday")) {
+                "Weekend"
+                } else {
+                        "Weekday"
+                        }
+        }
+stepsdata$day <- as.factor(sapply(stepsdata$date, day))
+
+```
+
+2. Calculate the average based on day and interval and plot the comparison charts for average steps per day
+```{r PlotPanel, echo=FALSE}
+
+dt <- data.table(stepsdata)
+averagedf = as.data.frame(dt[,list(average=mean(steps, na.rm=TRUE)), by=list(day,interval)])
+ 
+ggplot(averagedf, aes(x=interval, y=average,)) + 
+        geom_line(color="cornflowerblue", size=1) + 
+        facet_wrap(~ day, nrow=2, ncol=1) +
+        labs(x="5-minute Interval", y="Average Number of Steps") +
+        theme_bw()
+
+```
+<br>More steps seem to be taken during the weekend throughout the day in general i.e. there is consistency during weekends in terms of activities that require walking compared to weekdays.
+</p>
