@@ -82,7 +82,7 @@ The data is first downloaded from the course website and stored as stepsdata.
 ```
 ## [1] 10766.19
 ```
-There are some differences in the mean and median after imputing values.  The mean and median were 9354.23 and 10395 previously but both of these are now 10766.19.
+<br>There are some differences in the mean and median after imputing values.  The mean and median were 9354.23 and 10395 previously but both of these are now 10766.19.
 </p>
 <p>
 <font size=+2><b>Are there differences in activity patterns between weekdays and weekends?</b></font>
@@ -92,6 +92,6 @@ There are some differences in the mean and median after imputing values.  The me
 
 <br>2. Calculate the average based on day and interval and plot the comparison charts for average steps per day
 ![plot of chunk PlotPanel](figure/PlotPanel-1.png) 
-<img src="https://github.com/litheng/RepData_PeerAssessment1/blob/master/figure/PlotPanel-1.png">
+<br><img src="https://github.com/litheng/RepData_PeerAssessment1/blob/master/figure/PlotPanel-1.png">
 <br>More steps seem to be taken during the weekend throughout the day in general i.e. there is consistency during weekends in terms of activities that require walking compared to weekdays.
 </p>
