@@ -24,7 +24,8 @@ The data is first downloaded from the course website and stored as stepsdata.
 
 
 <br>2. Plot histogram for total number of steps taken per day
-![plot of chunk PlotHistogram](figure/PlotHistogram-1.png) 
+![plot of chunk PlotHistogram](figure/PlotHistogram-1.png)
+<img src="https://github.com/litheng/RepData_PeerAssessment1/blob/master/figure/PlotHistogram-1.png">
 
 <br>3a. Calculate mean of the total number of steps taken per day
 
@@ -45,7 +46,8 @@ The data is first downloaded from the course website and stored as stepsdata.
 
 
 <br>1b. Plot line chart for average daily activity pattern i.e. number of steps based on interval
-![plot of chunk PlotLine](figure/PlotLine-1.png) 
+![plot of chunk PlotLine](figure/PlotLine-1.png)
+<img src="https://github.com/litheng/RepData_PeerAssessment1/blob/master/figure/PlotLine-1.png">
 
 <br>2. Calculate which 5-minute interval contains the maximum number of steps, on average across all the days in the dataset
 
@@ -66,7 +68,8 @@ The data is first downloaded from the course website and stored as stepsdata.
 
 
 <br>4a. Plot histogram for total number of steps taken per day after imputing
-![plot of chunk PlotImputedHistogram](figure/PlotImputedHistogram-1.png) 
+![plot of chunk PlotImputedHistogram](figure/PlotImputedHistogram-1.png)
+<img src="https://github.com/litheng/RepData_PeerAssessment1/blob/master/figure/PlotImputedHistogram-1.png">
 
 <br>4b. Calculate mean of the total number of steps taken per day (after imputation)
 
@@ -89,5 +92,6 @@ There are some differences in the mean and median after imputing values.  The me
 
 <br>2. Calculate the average based on day and interval and plot the comparison charts for average steps per day
 ![plot of chunk PlotPanel](figure/PlotPanel-1.png) 
+<img src="https://github.com/litheng/RepData_PeerAssessment1/blob/master/figure/PlotPanel-1.png">
 <br>More steps seem to be taken during the weekend throughout the day in general i.e. there is consistency during weekends in terms of activities that require walking compared to weekdays.
 </p>
